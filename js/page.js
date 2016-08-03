@@ -91,12 +91,16 @@ $$(document).on('click', '#logo', function (e) {
 
     if (window.StatusBar) {
         alert(0);
-        StatusBar.styleDefault();
+        StatusBar.overlaysWebView(false);
+        StatusBar.backgroundColorByHexString("#3f51b5");
+        StatusBar.styleLightContent();
         alert(1);
-    }
-    StatusBar.overlaysWebView(true);
-    alert(2);
 
+        setTimeout(function () {
+            alert("hide!");
+            StatusBar.hide();
+        }, 5000);
+    }
     alert("end");
 });
 
