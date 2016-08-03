@@ -38,7 +38,12 @@ var app = {
     onDeviceReady: function () {
         console.log("ready0");
         app.receivedEvent('deviceready');
+
+        StatusBar.overlaysWebView(true);
+        alert(StatusBar.overlaysWebView);
         
+        StatusBar.styleBlackTranslucent();
+
         // SPLASHSCREEN (CONFIG.XML BUGFIX)
         setTimeout(function () {
             navigator.splashscreen.hide();
