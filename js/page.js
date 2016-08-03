@@ -1,11 +1,5 @@
 $(document).ready(function () {
 
-    if (window.StatusBar) {
-        StatusBar.overlaysWebView(false);
-        StatusBar.backgroundColorByHexString("#3f51b5");
-        StatusBar.styleLightContent();
-    }
-
     abort = false; // cancelar searching?
 
     if (typeof localStorage.chosen === "undefined") {

@@ -42,6 +42,16 @@ var app = {
         // SPLASHSCREEN (CONFIG.XML BUGFIX)
         setTimeout(function () {
             navigator.splashscreen.hide();
+
+
+            if (window.StatusBar) {
+                alert(0);
+                StatusBar.overlaysWebView(false);
+                StatusBar.backgroundColorByHexString("#3f51b5");
+                StatusBar.styleLightContent();
+                alert(1);
+            }
+
         }, 500);
 
         start();
