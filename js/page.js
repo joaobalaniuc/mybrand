@@ -86,6 +86,20 @@ $(document).ready(function () {
 $$(document).on('click', '#search_loading', function (e) {
     searchCancel();
 });
+$$(document).on('click', '#logo', function (e) {
+    alert("start");
+
+    if (window.StatusBar) {
+        alert(0);
+        StatusBar.styleDefault();
+        alert(1);
+    }
+    StatusBar.overlaysWebView(true);
+    alert(2);
+
+    alert("end");
+});
+
 $$(document).on('click', '#search', function (e) {
 
     searchReset();

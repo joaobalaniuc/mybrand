@@ -42,9 +42,10 @@ var app = {
         // SPLASHSCREEN (CONFIG.XML BUGFIX)
         setTimeout(function () {
             navigator.splashscreen.hide();
-        }, 500);
+        }, 1000);
+
         start();
-        
+
         StatusBar.overlaysWebView(true);
         StatusBar.styleBlackTranslucent();
 
