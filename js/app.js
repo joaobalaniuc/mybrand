@@ -45,11 +45,9 @@ var app = {
 
 
             if (window.StatusBar) {
-                alert(0);
-                StatusBar.overlaysWebView(false);
-                StatusBar.backgroundColorByHexString("#3f51b5");
-                StatusBar.styleLightContent();
-                alert(1);
+                /*StatusBar.overlaysWebView(false);
+                 StatusBar.backgroundColorByHexString("#3f51b5");
+                 StatusBar.styleLightContent();*/
             }
 
         }, 500);
