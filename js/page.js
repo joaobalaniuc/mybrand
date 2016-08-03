@@ -166,6 +166,8 @@ $$(document).on('keyup', '#string', function (e) {
 $$(document).on('click', '.result li', function (e) {
 
     var str = $('#string').val();
+    str = str.replace(/ /g, "").trim().toLowerCase();
+
     var tld = "." + $(this).attr("data-tld");
     var dom = str + tld;
     if ($('#result_one').is(':visible')) {
@@ -212,6 +214,7 @@ function domainSearch(i) {
         str += "." + tld;
     }
 
+    str = str.replace(/ /g, "").trim().toLowerCase();
     console.log(i + " => " + str);
 
     xhr = $.ajax({
