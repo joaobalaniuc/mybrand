@@ -214,47 +214,45 @@
 
                 </div>
             </div>
+        </div>
 
+        <!-- DEBUG -->
+        <script>
+            var isApp = document.URL.indexOf('http://') === -1 && document.URL.indexOf('https://') === -1;
+        </script>
+        <!-- PHONEGAP -->
+        <script src="cordova.js"></script>
+        <!-- API -->
+        <script type="text/javascript" src="build/js/framework7.js"></script>
+        <script type="text/javascript" src="js/jquery-1.10.1.min.js"></script>
+        <script type="text/javascript" src="js/kitchen-sink.js"></script>
+        <!-- APP -->
+        <script type="text/javascript" src="js/app.js"></script>
+        <script type="text/javascript" src="js/arrays.js"></script>
+        <!-- MY CLASSES -->
+        <script type="text/javascript" src="js/class.facebook.js"></script>
+        <script type="text/javascript" src="js/class.debug.js"></script>
+        <script type="text/javascript" src="js/class.store.js"></script>
+        <script type="text/javascript" src="js/class.str.js"></script>
+        <!-- MY PAGES -->
+        <script type="text/javascript" src="js/page.js"></script>
 
-            <!-- DEBUG -->
-            <script>
-                var isApp = document.URL.indexOf('http://') === -1 && document.URL.indexOf('https://') === -1;
-            </script>
-            <!--
-            <script src="http://192.168.0.100:8080/target/target-script-min.js#adsapp"></script>
-            <!-- PHONEGAP -->
-            <script src="cordova.js"></script>
-            <!-- API -->
-            <script type="text/javascript" src="build/js/framework7.js"></script>
-            <script type="text/javascript" src="js/jquery-1.10.1.min.js"></script>
-            <script type="text/javascript" src="js/kitchen-sink.js"></script>
-            <!-- APP -->
-            <script type="text/javascript" src="js/app.js"></script>
-            <script type="text/javascript" src="js/arrays.js"></script>
-            <!-- MY CLASSES -->
-            <script type="text/javascript" src="js/class.facebook.js"></script>
-            <script type="text/javascript" src="js/class.debug.js"></script>
-            <script type="text/javascript" src="js/class.store.js"></script>
-            <script type="text/javascript" src="js/class.str.js"></script>
-            <!-- MY PAGES -->
-            <script type="text/javascript" src="js/page.js"></script>
+        <script type="text/javascript">
+            // alias session        
+            s = sessionStorage;
 
-            <script type="text/javascript">
-                // alias session        
-                s = sessionStorage;
+            // init
+            app.initialize();
 
-                // init
-                app.initialize();
+            // DEV
+            if (!isApp) {
+                start();
+            }
 
-                // DEV
-                if (!isApp) {
-                    start();
-                }
+            console.log(localStorage);
+            console.log(sessionStorage);
 
-                console.log(localStorage);
-                console.log(sessionStorage);
-
-            </script>
+        </script>
 
     </body>
 </html>
