@@ -29,7 +29,7 @@
 
     <body class="layout-dark theme-indigo">
 
-        <div class="statusbar-overlay"></div>
+        <div class="statusbar-overlay" style="background:#3f51b5 !important"></div>
 
         <div class="panel-overlay"></div>
 
@@ -104,7 +104,7 @@
                             </div>
                             <div class="content-block" style="margin-bottom:0px">
                                 <a id="search" href="#" class="button button-raised button-fill color-pink">
-                                    Search Domains
+                                    Search Domain
                                 </a>
                                 <a id="search_loading" style="display:none" href="#" class="button button-raised button-fill color-indigo">
                                     <img src="img/loading-mini2.gif" style="vertical-align: middle" />
@@ -113,7 +113,10 @@
 
                             <div class="content-block-title">Search Results</div>
                             <div class="list-block">
-                                <ul id="result">
+                                <ul class="result" id="result">
+
+                                </ul>
+                                <ul class="result" id="result_one" style="display:none">
 
                                 </ul>
                             </div>
@@ -180,8 +183,29 @@
 
                             <div class="page-content tab active">
                                 <div class="list-block" style="margin-top:10px">
-                                    <ul id="replace">
+                                    <ul id="replace_list">
                                     </ul>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+
+                    <div data-page="whois" class="page cached toolbar-fixed">
+                        <div class="navbar">
+                            <div class="navbar-inner">
+                                <div class="left"><a href="#index" class="back link icon-only"><i class="icon icon-back"></i></a></div>
+                                <div class="center" style="margin:0">
+                                    Whois &nbsp; <span class="dom"></span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="tabs-animated-wrap">
+
+                            <div class="page-content">
+                                <div class="content-block">
+                                    <div id="whois_list"></div>
                                 </div>
                             </div>
 

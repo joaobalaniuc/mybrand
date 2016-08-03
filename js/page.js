@@ -1,3 +1,6 @@
+//========================================
+// ON START
+//========================================
 $(document).ready(function () {
 
     abort = false; // cancelar searching?
@@ -30,8 +33,19 @@ $(document).ready(function () {
         html += '<div class="item-title">';
         html += ' &nbsp; <span class="string"></span><span class="tld">.' + val + '</span></div>';
         html += '</div></div></a></li>';
-        $('#replace').append(html);
+        $('#replace_list').append(html);
     });
+    //==============
+    // #index page 2
+    //==============
+    var html = "";
+    html += '<li data-dom=""><a class="item-link"><div class="item-content"><div class="item-inner">';
+    html += '<div class="item-title">';
+    html += '<img class="loading" src="img/reload.svg" style="vertical-align:middle;display:none" />';
+    html += '<i style="color:#666" class="none fa fa-circle-o"></i> <i class="fa fa-check-circle-o yes" style="display:none"></i> <i class="fa fa-exclamation-circle no" style="display:none"></i> <i class="fa fa-question-circle-o question" style="display:none"></i>';
+    html += ' &nbsp; <span class="dom"></span></div>';
+    html += '</div></div></a></li>';
+    $('#result_one').html(html);
     //console.log(tldCat);
     var html = "";
     for (i = 0; i < tKeys.length; i++) {
@@ -83,10 +97,27 @@ $(document).ready(function () {
     }
     $('#listall').html(html);
 });
+$(window).on("load", function () {
+    //alert(dateFormat(new Date(), "yyyy-mm-dd hh:MM:ss"));
+    //loadingHide();
+});
+$$(document).on('pageBeforeInit', '*', function (e) {
+    //alert(1);
+    //$('#toolbar').show();
+    //getSession();
+});
+$$(document).on('pageBack', '*', function (e) {
+    //$('#toolbar').show(); // back from messages
+});
+myApp.onPageInit('*', function (page) {
+    //
+});
+//========================================
+// CLICK EVENTS
+//========================================
 $$(document).on('click', '#search_loading', function (e) {
     searchCancel();
 });
-
 $$(document).on('click', '#search', function (e) {
 
     searchReset();
@@ -109,54 +140,78 @@ $$(document).on('keyup', '#string', function (e) {
 
     str = str.replace(/ /g, "").trim().toLowerCase();
 
-    $("#result [data-tld]").each(function () {
-        var tld = $(this).attr("data-tld");
-        $(this).find(".string").html(str);
-        //$(this).find(".tld").html(str + "." + tld);
-        $(this).removeClass("color-lightgreen").removeClass("color-deeporange");
-        $(this).find("i").hide();
-        $(this).find("i.none").show();
-    });
-
-
-
+    if (str.indexOf(".") > -1) {
+        $("#result").hide();
+        $("#result_one").show();
+        $(".dom").html(str);
+        $("#result_one [data-dom]").each(function () {
+            $(this).removeClass("color-lightgreen").removeClass("color-deeporange");
+            $(this).find("i").hide();
+            $(this).find("i.none").show();
+        });
+    }
+    else {
+        $("#result_one").hide();
+        $("#result").show();
+        $("#result [data-tld]").each(function () {
+            var tld = $(this).attr("data-tld");
+            $(this).find(".string").html(str);
+            //$(this).find(".tld").html(str + "." + tld);
+            $(this).removeClass("color-lightgreen").removeClass("color-deeporange");
+            $(this).find("i").hide();
+            $(this).find("i.none").show();
+        });
+    }
 });
-$(window).on("load", function () {
-    //alert(dateFormat(new Date(), "yyyy-mm-dd hh:MM:ss"));
-    //loadingHide();
+$$(document).on('click', '.result li', function (e) {
+
+    var str = $('#string').val();
+    var tld = "." + $(this).attr("data-tld");
+    var dom = str + tld;
+    if ($('#result_one').is(':visible')) {
+        var dom = $('#string').val();
+    }
+    if (typeof sessionStorage["whois_" + dom] !== "undefined") {
+        $(".dom").html(dom);
+        $("#whois_list").html("");
+        var a = JSON.parse(sessionStorage["whois_" + dom]);
+        a.forEach(function (data) {
+            $("#whois_list").append(data + "<br/>");
+        });
+        mainView.router.load({pageName: 'whois'});
+    }
 });
 $$(document).on("submit", "form", function (e) {
     e.preventDefault();
     return false;
 });
-$$(document).on('pageBeforeInit', '*', function (e) {
-    //alert(1);
-    //$('#toolbar').show();
-    //getSession();
-});
-$$(document).on('pageBack', '*', function (e) {
-    //$('#toolbar').show(); // back from messages
-});
-myApp.onPageInit('*', function (page) {
-    //
-});
 //========================================
 // SEARCH DOMAIN , CANCEL & RESET FORM
 //========================================
 function domainSearch(i) {
-    var tld = $("#result [data-tld]:eq(" + i + ")").attr("data-tld");
-    if (typeof tld === "undefined") {
-        $('#search_loading').hide();
-        $('#search').show();
-        $('#string').prop("disabled", false);
-        return false;
+    // result unique
+    if ($('#result_one').is(':visible')) {
+        var $elem = $("#result_one [data-dom]");
+        $elem.find("i").hide();
+        $elem.find(".loading").show();
+        var str = $('#string').val();
     }
-    var $elem = $("#result [data-tld]:eq(" + i + ")");
-    $elem.find("i").hide();
-    $elem.find(".loading").show();
+    // result multiple
+    else {
+        var tld = $("#result [data-tld]:eq(" + i + ")").attr("data-tld");
+        if (typeof tld === "undefined") {
+            $('#search_loading').hide();
+            $('#search').show();
+            $('#string').prop("disabled", false);
+            return false;
+        }
+        var $elem = $("#result [data-tld]:eq(" + i + ")");
+        $elem.find("i").hide();
+        $elem.find(".loading").show();
+        var str = $('#string').val();
+        str += "." + tld;
+    }
 
-    var str = $('#string').val();
-    str += "." + tld;
     console.log(i + " => " + str);
 
     xhr = $.ajax({
@@ -175,7 +230,14 @@ function domainSearch(i) {
                 $elem.removeClass("color-lightgreen").removeClass("color-deeporange");
                 if (typeof abort === "undefined" || abort === false) {
                     domainInterval = setTimeout(function () {
-                        domainSearch(parseInt(i + 1));
+                        if ($('#result').is(':visible')) {
+                            // multiple
+                            domainSearch(parseInt(i + 1));
+                        }
+                        else {
+                            // unique
+                            searchCancel();
+                        }
                     }, 300);
                 }
                 else {
@@ -189,14 +251,32 @@ function domainSearch(i) {
 
             .done(function (res) {
                 console.log(res);
+                sessionStorage["whois_" + str] = JSON.stringify(res.rawdata);
                 var reg = res.regrinfo.registered;
                 if (reg === "yes") {
                     $elem.find("i.no").show();
                     $elem.removeClass("color-lightgreen").addClass("color-deeporange");
                 }
                 else {
-                    $elem.find("i.yes").show();
-                    $elem.addClass("color-lightgreen").removeClass("color-deeporange");
+                    var registered = false;
+                    // Não foi registrado mesmo? Pente fino
+                    var a = res.rawdata;
+                    a.forEach(function (data) {
+                        if (data.indexOf("Domain ID:") > -1) {
+                            registered = true;
+                        }
+                    });
+                    // Reg. NÃO
+                    if (!registered) {
+                        $elem.find("i.yes").show();
+                        $elem.addClass("color-lightgreen").removeClass("color-deeporange");
+                    }
+                    // Reg. SIM
+                    else {
+                        $elem.find("i.no").show();
+                        $elem.removeClass("color-lightgreen").addClass("color-deeporange");
+                    }
+
                 }
             });
 
@@ -230,7 +310,7 @@ $$(document).on('click', '.tld_list .swipeout', function (e) {
     console.log("new replace = " + sessionStorage.replaceTLD);
 });
 // 2. click on replace list
-$$(document).on('click', '#replace li', function (e) {
+$$(document).on('click', '#replace_list li', function (e) {
     var num = $(this).attr("data-num");
     sessionStorage.replaceTLD_old = $(this).attr("data-tld");
     mainView.router.load({pageName: 'index'});
@@ -264,7 +344,7 @@ function domainChange(i, tld) {
             .addClass("fa-circle-o");
 
     // refresh array local
-    $("#replace [data-num]").each(function (index) {
+    $("#replace_list [data-num]").each(function (index) {
         tld = $(this).find(".tld").text();
         if (typeof tld !== "undefined") {
             tld = tld.slice(1); // remove "."
