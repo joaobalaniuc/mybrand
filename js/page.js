@@ -1,5 +1,11 @@
 $(document).ready(function () {
 
+    if (window.StatusBar) {
+        StatusBar.overlaysWebView(false);
+        StatusBar.backgroundColorByHexString("#3f51b5");
+        StatusBar.styleLightContent();
+    }
+
     abort = false; // cancelar searching?
 
     if (typeof localStorage.chosen === "undefined") {
@@ -85,23 +91,6 @@ $(document).ready(function () {
 });
 $$(document).on('click', '#search_loading', function (e) {
     searchCancel();
-});
-$$(document).on('click', '#logo', function (e) {
-    alert("start");
-
-    if (window.StatusBar) {
-        alert(0);
-        StatusBar.overlaysWebView(false);
-        StatusBar.backgroundColorByHexString("#3f51b5");
-        StatusBar.styleLightContent();
-        alert(1);
-
-        setTimeout(function () {
-            alert("hide!");
-            StatusBar.hide();
-        }, 5000);
-    }
-    alert("end");
 });
 
 $$(document).on('click', '#search', function (e) {
