@@ -39,16 +39,14 @@ var app = {
         console.log("ready0");
         app.receivedEvent('deviceready');
 
-        StatusBar.overlaysWebView(true);
-        alert(StatusBar.overlaysWebView);
-        
-        StatusBar.styleBlackTranslucent();
-
         // SPLASHSCREEN (CONFIG.XML BUGFIX)
         setTimeout(function () {
             navigator.splashscreen.hide();
-        }, 1000);
+        }, 500);
         start();
+        
+        StatusBar.overlaysWebView(true);
+        StatusBar.styleBlackTranslucent();
 
         console.log("ready1");
     }
