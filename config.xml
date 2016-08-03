@@ -38,7 +38,7 @@
     <plugin name="org.apache.cordova.device-orientation" source="pgb" spec="0.3.11" />
     <plugin name="org.apache.cordova.dialogs" source="pgb" spec="0.3.0" />
     <plugin name="org.apache.cordova.splashscreen" source="pgb" spec="1.0.0" />
-    <plugin name="org.apache.cordova.network-information" source="pgb" spec="0.2.15" />
+    <plugin name="cordova-plugin-network-information" source="npm" />
     <!--
     <plugin name="org.apache.cordova.contacts" spec="0.2.16" source="pgb" />
     <plugin name="org.apache.cordova.camera" source="pgb" spec="0.3.6" />
@@ -73,7 +73,7 @@
     <gap:splash gap:platform="ios" height="768" src="res/screen/ios/screen-ipad-landscape.png" width="1024" />
     <gap:splash gap:platform="winphone" src="res/screen/windows-phone/screen-portrait.jpg" />
     
-    <plugin name="cordova-plugin-whitelist" spec="1.2.1" />
+    <plugin name="cordova-plugin-whitelist" spec="1.2.1" source="npm" />
     <!--<access origin="http://graph.facebook.com" subdomains="true" />-->
     <access origin="*" />
     <allow-navigation href="*" />
@@ -91,10 +91,13 @@
         <allow-intent href="itms-apps:*" />
     </platform>
     
-    <plugin name="com.phonegap.plugin.statusbar" source="pgb" spec="1.1.0" />
+    
+    <plugin name="cordova-plugin-statusbar" source="npm" />
     <preference name="StatusBarOverlaysWebView" value="true" />
-    <preference name="StatusBarBackgroundColor" value="#000000" />
+    <!--<preference name="StatusBarBackgroundColor" value="#000000" />-->
     <preference name="StatusBarStyle" value="lightcontent" />
+    
+    
     <!--
     <plugin name="com.phonegap.plugins.facebookconnect" source="pgb" spec="0.9.0">
         <param name="APP_ID" value="1269306609763820" />
