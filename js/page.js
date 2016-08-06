@@ -1,12 +1,13 @@
 //========================================
 // ON START
 //========================================
+
 $(document).ready(function () {
 
     abort = false; // cancelar searching?
 
     if (typeof localStorage.chosen === "undefined") {
-        localStorage.chosen = "com,com.br,net,org,co.uk,club,us,aero";
+        localStorage.chosen = "com,com.br,net,org,co.uk,club,biz,info";
     }
     var chosen = localStorage.chosen;
     var chosenArr = chosen.split(",");
@@ -123,6 +124,7 @@ $$(document).on('click', '#search', function (e) {
     searchReset();
 
     var str = $('#string').val();
+    str = clean(str);
 
     if (str.length < 3) {
         return false;
@@ -138,7 +140,7 @@ $$(document).on('keyup', '#string', function (e) {
 
     var str = $('#string').val();
 
-    str = str.replace(/ /g, "").trim().toLowerCase();
+    str = clean(str);
 
     if (str.indexOf(".") > -1) {
         $("#result").hide();
@@ -166,12 +168,13 @@ $$(document).on('keyup', '#string', function (e) {
 $$(document).on('click', '.result li', function (e) {
 
     var str = $('#string').val();
-    str = str.replace(/ /g, "").trim().toLowerCase();
+    str = clean(str);
 
     var tld = "." + $(this).attr("data-tld");
     var dom = str + tld;
     if ($('#result_one').is(':visible')) {
         var dom = $('#string').val();
+        dom = clean(dom);
     }
     if (typeof sessionStorage["whois_" + dom] !== "undefined") {
         $(".dom").html(dom);
@@ -214,7 +217,7 @@ function domainSearch(i) {
         str += "." + tld;
     }
 
-    str = str.replace(/ /g, "").trim().toLowerCase();
+    str = clean(str);
     console.log(i + " => " + str);
 
     xhr = $.ajax({
